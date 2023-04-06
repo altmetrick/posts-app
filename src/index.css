@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --BGCOLOR: #373d44;
+  --COLOR: whitesmoke;
+}
+
+html {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background: var(--BGCOLOR);
+  color: var(--COLOR);
+}
+
+body {
+  min-height: 100vh;
+  font-size: 1.5rem;
+  padding: 0 10% 10%;
+}
