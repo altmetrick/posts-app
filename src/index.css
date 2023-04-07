@@ -5,12 +5,13 @@
 }
 
 :root {
-  --BGCOLOR: #373d44;
+  --BGCOLOR: #5f388c;
+  --BORDER-COLOR: rgba(245, 245, 245, 0.779);
   --COLOR: whitesmoke;
 }
 
 html {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: var(--BGCOLOR);
   color: var(--COLOR);
 }
@@ -18,5 +19,50 @@ html {
 body {
   min-height: 100vh;
   font-size: 1.5rem;
-  padding: 0 10% 10%;
+  padding: 0 5% 5%;
+}
+
+/* General */
+.margin-top-1 {
+  margin-top: 1em;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+input,
+textarea,
+button,
+select {
+  font: inherit;
+  margin-bottom: 1em;
+}
+
+.main-container {
+  min-width: 300px;
+  max-width: 600px;
+
+  margin: auto;
+}
+
+/* Posts */
+
+.post {
+  margin: 0.5em 0;
+  border: 1px solid var(--BORDER-COLOR);
+  border-radius: 10px;
+  padding: 1em;
+}
+
+.post__content {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.4;
+  font-size: 1.2rem;
+  margin: 0.5em 0;
+}
+
+.add-post-form label {
+  margin-bottom: 0.5em;
 }
