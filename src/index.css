@@ -5,9 +5,10 @@
 }
 
 :root {
-  --BGCOLOR: #5f388c;
+  --BGCOLOR: #140f58;
   --BORDER-COLOR: rgba(245, 245, 245, 0.779);
   --COLOR: whitesmoke;
+  --COLOR-DIMMED: rgba(245, 245, 245, 0.778);
 }
 
 html {
@@ -65,4 +66,9 @@ select {
 
 .add-post-form label {
   margin-bottom: 0.5em;
+}
+
+.post-author {
+  font-size: 1rem;
+  color: var(--COLOR-DIMMED);
 }

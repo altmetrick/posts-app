@@ -1,25 +1,36 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from '../../app/store';
 import { addPost } from './postsSlice';
+import { useSelector } from 'react-redux';
+import { selectAllUsers } from '../users';
 
 const AddPostForm = () => {
   const dispatch = useAppDispatch();
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [userId, setUserId] = useState('');
 
   const onTitleChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
   const onContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
+  const onAuthorChange = (e: ChangeEvent<HTMLSelectElement>) => setUserId(e.target.value);
 
   const handleSavePost = () => {
     if (title && content) {
-      dispatch(addPost({ title, content }));
+      dispatch(addPost({ title, content, userId }));
     }
     setTitle('');
     setContent('');
+    setUserId('');
   };
 
-  const canSave = title && content;
+  const authorIdsOptions = useSelector(selectAllUsers).map((user) => (
+    <option key={user.id} value={user.id}>
+      {user.name}
+    </option>
+  ));
+
+  const canSave = title && content && userId;
 
   return (
     <section className="margin-top-1">
@@ -35,6 +46,14 @@ const AddPostForm = () => {
             value={title}
             onChange={onTitleChange}
           />
+        </div>
+
+        <div className="flex-column">
+          <label htmlFor="postAuthor">Author</label>
+          <select id="postAuthor" value={userId} onChange={onAuthorChange}>
+            <option value={''}></option>
+            {authorIdsOptions}
+          </select>
         </div>
 
         <div className="flex-column">
