@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectAllPosts } from './postsSlice';
 import PostAuthor from './PostAuthor';
+import TimeAgo from './TimeAgo';
 
 const PostsList = () => {
   const posts = useAppSelector(selectAllPosts);
@@ -10,7 +11,11 @@ const PostsList = () => {
     <article key={post.id} className="post">
       <h3 className="post__title">{post.title}</h3>
       <p className="post__content">{post.content.substring(0, 100)}...</p>
-      <PostAuthor userId={post.userId} />
+
+      <p className="post__info">
+        <PostAuthor userId={post.userId} />
+        <TimeAgo timestamp={post.date} />
+      </p>
     </article>
   ));
 

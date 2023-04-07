@@ -7,11 +7,7 @@ const PostAuthor: React.FC<{ userId: string }> = ({ userId }) => {
 
   const author = users.find((user) => user.id === userId);
 
-  return (
-    <p className="post-author">
-      <span>by {author ? author.name : 'unknown'}</span>
-    </p>
-  );
+  return <span>by {author ? author.name : 'unknown'}</span>;
 };
 
 export default PostAuthor;
