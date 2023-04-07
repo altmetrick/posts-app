@@ -72,3 +72,13 @@ select {
 .add-post-form label {
   margin-bottom: 0.5em;
 }
+
+.reaction-button {
+  font-size: 1rem;
+  color: var(--COLOR);
+  background: transparent;
+  margin: 0.25em;
+  border: none;
+
+  cursor: pointer;
+}
