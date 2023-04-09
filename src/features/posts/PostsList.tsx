@@ -38,12 +38,7 @@ const PostsList = () => {
     content = <div>{error?.message || 'Error'}</div>;
   }
 
-  return (
-    <section className="posts-list margin-top-1">
-      <h2>Posts</h2>
-      {content}
-    </section>
-  );
+  return <section className="posts-list margin-top-1">{content}</section>;
 };
 
 export default PostsList;

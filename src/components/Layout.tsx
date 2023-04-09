@@ -1,13 +1,15 @@
 import { Outlet } from 'react-router-dom';
+import Header from './Header';
+import Footer from './Footer';
 
 const Layout = () => {
   return (
     <>
-      <h1>Header</h1>
+      <Header />
       <main className="main-container">
         <Outlet />
       </main>
-      <h2>Footer</h2>
+      <Footer />
     </>
   );
 };
