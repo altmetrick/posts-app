@@ -103,6 +103,8 @@ const postsSlice = createSlice({
         //Add date and reactions to loaded posts
         let min = 1;
         const transformedPosts = action.payload.map((post: any) => {
+          post.id = post.id.toString();
+          post.userId = post.userId.toString();
           post.date = sub(new Date(), { minutes: min++ }).toISOString();
           post.reactions = {
             thumbsUp: 0,
@@ -139,8 +141,12 @@ const postsSlice = createSlice({
 
 //Selectors
 export const selectAllPosts = (state: RootState) => state.posts.posts;
-export const getPostsStatus = (state: RootState) => state.posts.status;
-export const getPostsError = (state: RootState) => state.posts.error;
+export const selectPostsStatus = (state: RootState) => state.posts.status;
+export const selectPostsError = (state: RootState) => state.posts.error;
+
+export const selectPostById = (postId: string) => {
+  return (state: RootState) => state.posts.posts.find((post) => post.id === postId);
+};
 
 //Actions
 export const { addPost, addReaction } = postsSlice.actions;

@@ -9,6 +9,8 @@
   --BORDER-COLOR: rgba(245, 245, 245, 0.779);
   --COLOR: whitesmoke;
   --COLOR-DIMMED: rgba(245, 245, 245, 0.778);
+  --COLOR-LINK: rgb(252, 255, 255);
+  --COLOR-LINK-HOVER: rgb(35, 213, 253);
 }
 
 html {
@@ -41,6 +43,11 @@ select {
   margin-bottom: 1em;
 }
 
+a,
+a:visited {
+  text-decoration: none;
+}
+
 .main-container {
   min-width: 300px;
   max-width: 600px;
@@ -67,6 +74,14 @@ select {
 .post__info {
   font-size: 1rem;
   color: var(--COLOR-DIMMED);
+}
+
+.post__info a {
+  color: var(--COLOR-LINK);
+}
+
+.post__info a:hover {
+  color: var(--COLOR-LINK-HOVER);
 }
 
 .add-post-form label {
