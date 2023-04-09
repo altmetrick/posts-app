@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from '../../app/store';
-import { addPost } from './postsSlice';
+import { addNewPost } from './postsSlice';
 import { useSelector } from 'react-redux';
 import { selectAllUsers } from '../users';
 
@@ -10,18 +10,27 @@ const AddPostForm = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [userId, setUserId] = useState('');
+  const [addPostReqStatus, setAddPostReqStatus] = useState('idle');
 
   const onTitleChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
   const onBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => setBody(e.target.value);
   const onAuthorChange = (e: ChangeEvent<HTMLSelectElement>) => setUserId(e.target.value);
 
   const handleSavePost = () => {
-    if (title && body && userId) {
-      dispatch(addPost({ title, body, userId }));
+    if (title && body && userId && addPostReqStatus === 'idle') {
+      try {
+        setAddPostReqStatus('pending');
+        dispatch(addNewPost({ title, body, userId }));
+
+        setTitle('');
+        setBody('');
+        setUserId('');
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setAddPostReqStatus('idle');
+      }
     }
-    setTitle('');
-    setBody('');
-    setUserId('');
   };
 
   const authorIdsOptions = useSelector(selectAllUsers).map((user) => (
@@ -30,7 +39,7 @@ const AddPostForm = () => {
     </option>
   ));
 
-  const canSave = title && body && userId;
+  const canSave = title && body && userId && addPostReqStatus === 'idle';
 
   return (
     <section className="margin-top-1">

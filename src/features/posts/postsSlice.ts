@@ -56,6 +56,10 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   });
   return res.data;
 });
+export const addNewPost = createAsyncThunk('posts/AddNewPost', async (postData: {}) => {
+  const res = await axios.post(POSTS_URL, postData);
+  return res.data;
+});
 
 //
 
@@ -90,6 +94,7 @@ const postsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      //Fetch Posts
       .addCase(fetchPosts.pending, (state, action) => {
         state.status = 'loading';
       })
@@ -114,6 +119,21 @@ const postsSlice = createSlice({
         state.status = 'failed';
         state.error = action.error;
       });
+    //Add New Post
+    builder.addCase(addNewPost.fulfilled, (state, action) => {
+      state.status = 'succeeded';
+      state.posts.push({
+        ...action.payload,
+        date: new Date().toISOString(),
+        reactions: {
+          thumbsUp: 0,
+          wow: 0,
+          heart: 0,
+          rocket: 0,
+          coffee: 0,
+        },
+      });
+    });
   },
 });
 
