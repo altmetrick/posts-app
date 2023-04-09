@@ -8,19 +8,19 @@ const AddPostForm = () => {
   const dispatch = useAppDispatch();
 
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [body, setBody] = useState('');
   const [userId, setUserId] = useState('');
 
   const onTitleChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-  const onContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
+  const onBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => setBody(e.target.value);
   const onAuthorChange = (e: ChangeEvent<HTMLSelectElement>) => setUserId(e.target.value);
 
   const handleSavePost = () => {
-    if (title && content) {
-      dispatch(addPost({ title, content, userId }));
+    if (title && body && userId) {
+      dispatch(addPost({ title, body, userId }));
     }
     setTitle('');
-    setContent('');
+    setBody('');
     setUserId('');
   };
 
@@ -30,7 +30,7 @@ const AddPostForm = () => {
     </option>
   ));
 
-  const canSave = title && content && userId;
+  const canSave = title && body && userId;
 
   return (
     <section className="margin-top-1">
@@ -57,13 +57,8 @@ const AddPostForm = () => {
         </div>
 
         <div className="flex-column">
-          <label htmlFor="postContent">Content</label>
-          <textarea
-            id="postContent"
-            name="postContent"
-            value={content}
-            onChange={onContentChange}
-          />
+          <label htmlFor="postBody">Body</label>
+          <textarea id="postBody" name="postBody" value={body} onChange={onBodyChange} />
         </div>
 
         <button type="button" onClick={handleSavePost} disabled={!canSave}>

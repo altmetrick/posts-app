@@ -1,33 +1,47 @@
-import React from 'react';
-import { useAppSelector } from '../../app/hooks';
-import { selectAllPosts } from './postsSlice';
-import PostAuthor from './PostAuthor';
-import TimeAgo from './TimeAgo';
-import ReactionsButtons from './ReactionsButtons';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { fetchPosts, getPostsError, getPostsStatus, selectAllPosts } from './postsSlice';
+import PostExcerpt from './PostExcerpt';
 
 const PostsList = () => {
+  const dispatch = useAppDispatch();
+
+  const status = useAppSelector(getPostsStatus);
   const posts = useAppSelector(selectAllPosts);
+  const error = useAppSelector(getPostsError);
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchPosts());
+    }
+  }, [status, dispatch]);
 
   //Sort posts by date
   const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date));
 
-  const renderedPosts = orderedPosts.map((post) => (
-    <article key={post.id} className="post">
-      <h3 className="post__title">{post.title}</h3>
-      <p className="post__content">{post.content.substring(0, 100)}...</p>
+  const renderedPosts = orderedPosts.map((post) => {
+    return <PostExcerpt key={post.id} post={post} />;
+  });
 
-      <p className="post__info">
-        <PostAuthor userId={post.userId} />
-        <TimeAgo timestamp={post.date} />
-      </p>
-      <ReactionsButtons post={post} />
-    </article>
-  ));
+  let content;
+
+  if (status === 'loading') {
+    content = <div>Loading...</div>;
+  } else if (status === 'succeeded') {
+    //Sort posts by date
+    const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date));
+    const renderedPosts = orderedPosts.map((post) => {
+      return <PostExcerpt key={post.id} post={post} />;
+    });
+    content = renderedPosts;
+  } else if (status === 'failed') {
+    content = <div>{error?.message || 'Error'}</div>;
+  }
 
   return (
     <section className="posts-list margin-top-1">
       <h2>Posts</h2>
-      {renderedPosts}
+      {content}
     </section>
   );
 };
