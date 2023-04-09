@@ -20,7 +20,7 @@ const AddPostForm = () => {
     if (title && body && userId && addPostReqStatus === 'idle') {
       try {
         setAddPostReqStatus('pending');
-        dispatch(addNewPost({ title, body, userId }));
+        dispatch(addNewPost({ title, body, userId })).unwrap();
 
         setTitle('');
         setBody('');
