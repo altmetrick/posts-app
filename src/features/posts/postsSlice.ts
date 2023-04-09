@@ -54,9 +54,10 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
       _limit: 10,
     },
   });
-
   return res.data;
 });
+
+//
 
 const postsSlice = createSlice({
   name: 'posts',
@@ -126,7 +127,7 @@ export const { addPost, addReaction } = postsSlice.actions;
 
 export const postsReducer = postsSlice.reducer;
 
-//types
+//Types
 interface PostsStateT {
   posts: Array<PostT>;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
