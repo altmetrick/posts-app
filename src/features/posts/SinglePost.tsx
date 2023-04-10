@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom';
-import { PostT, selectPostById } from './postsSlice';
+import { Link, useParams } from 'react-router-dom';
+import { selectPostById } from './postsSlice';
 import { useAppSelector } from '../../app/store';
 
 import PostAuthor from './PostAuthor';
@@ -30,6 +30,7 @@ const SinglePost = () => {
       <p className="post__info">
         <PostAuthor userId={post.userId} />
         <TimeAgo timestamp={post.date} />
+        <Link to={`/post/edit/${post.id}`}> Edit Post</Link>
       </p>
       <ReactionsButtons post={post} />
     </article>

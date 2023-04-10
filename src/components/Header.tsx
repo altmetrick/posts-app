@@ -9,8 +9,10 @@ const Header = () => {
   ];
 
   const renderedLinks = options.map((option) => (
-    <div className="nav-bar__box">
-      <Link to={option.path}>{option.label}</Link>
+    <div key={option.label} className="nav-bar__box">
+      <Link to={option.path} className={`${option.path === pathname ? 'active' : ''}`}>
+        {option.label}
+      </Link>
     </div>
   ));
 

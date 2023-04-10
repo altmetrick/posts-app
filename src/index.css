@@ -5,12 +5,16 @@
 }
 
 :root {
-  --BGCOLOR: #110b1c;
+  --BGCOLOR: #070f2b;
+  --BGCOLOR-FORM-ELEMENTS: #151f46;
+
   --BORDER-COLOR: rgba(245, 245, 245, 0.779);
+
   --COLOR: whitesmoke;
   --COLOR-DIMMED: rgba(245, 245, 245, 0.778);
   --COLOR-LINK: rgb(243, 135, 239);
   --COLOR-LINK-HOVER: rgb(35, 213, 253);
+  --COLOR-LINK-ACTIVE: rgb(255, 0, 170);
 }
 
 html {
@@ -37,10 +41,21 @@ body {
 
 input,
 textarea,
-button,
 select {
   font: inherit;
   margin-bottom: 1em;
+  background-color: var(--BGCOLOR-FORM-ELEMENTS);
+  color: var(--COLOR-DIMMED);
+}
+
+button {
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.5rem;
+
+  margin-bottom: 1em;
+  margin-right: 0.5em;
+  padding: 0.2em;
 }
 
 a {
@@ -54,6 +69,10 @@ a:hover {
 a,
 a:visited {
   text-decoration: none;
+}
+.active,
+.active:hover {
+  color: var(--COLOR-LINK-ACTIVE);
 }
 
 .main-container {
@@ -98,7 +117,7 @@ a:visited {
   color: var(--COLOR-DIMMED);
 }
 
-.add-post-form label {
+.post-form label {
   margin-bottom: 0.5em;
 }
 
@@ -110,4 +129,9 @@ a:visited {
   border: none;
 
   cursor: pointer;
+}
+
+.delete-button {
+  background-color: rgb(245, 23, 23);
+  color: white;
 }

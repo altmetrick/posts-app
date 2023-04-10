@@ -3,6 +3,7 @@ import { useAppDispatch } from '../../app/store';
 import { addNewPost } from './postsSlice';
 import { useSelector } from 'react-redux';
 import { selectAllUsers } from '../users';
+import { useNavigate } from 'react-router-dom';
 
 const AddPostForm = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +12,8 @@ const AddPostForm = () => {
   const [body, setBody] = useState('');
   const [userId, setUserId] = useState('');
   const [addPostReqStatus, setAddPostReqStatus] = useState('idle');
+
+  const navigate = useNavigate();
 
   const onTitleChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
   const onBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => setBody(e.target.value);
@@ -25,6 +28,8 @@ const AddPostForm = () => {
         setTitle('');
         setBody('');
         setUserId('');
+
+        navigate('/');
       } catch (error) {
         console.log(error);
       } finally {
@@ -45,7 +50,7 @@ const AddPostForm = () => {
     <section className="margin-top-1">
       <h2>Add Post</h2>
 
-      <form className="add-post-form">
+      <form className="post-form">
         <div className="flex-column">
           <label htmlFor="postTitle">Title</label>
           <input

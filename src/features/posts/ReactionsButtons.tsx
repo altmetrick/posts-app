@@ -1,6 +1,5 @@
-import { PostT, addReaction } from '.';
+import { PostT, addReaction, PostsReactionsT } from './postsSlice';
 import { useAppDispatch } from '../../app/store';
-import { PostsReactionsT } from './index';
 
 const reactionEmoji = {
   thumbsUp: '👍',

@@ -16,13 +16,6 @@ const PostsList = () => {
     }
   }, [status, dispatch]);
 
-  //Sort posts by date
-  const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date));
-
-  const renderedPosts = orderedPosts.map((post) => {
-    return <PostExcerpt key={post.id} post={post} />;
-  });
-
   let content;
 
   if (status === 'loading') {
@@ -30,10 +23,9 @@ const PostsList = () => {
   } else if (status === 'succeeded') {
     //Sort posts by date
     const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date));
-    const renderedPosts = orderedPosts.map((post) => {
+    content = orderedPosts.map((post) => {
       return <PostExcerpt key={post.id} post={post} />;
     });
-    content = renderedPosts;
   } else if (status === 'failed') {
     content = <div>{error?.message || 'Error'}</div>;
   }

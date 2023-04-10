@@ -56,9 +56,29 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   });
   return res.data;
 });
-export const addNewPost = createAsyncThunk('posts/AddNewPost', async (postData: {}) => {
-  const res = await axios.post(POSTS_URL, postData);
-  return res.data;
+export const addNewPost = createAsyncThunk(
+  'posts/addNewPost',
+  async (postData: { userId: string; title: string; body: string }) => {
+    const res = await axios.post(POSTS_URL, postData);
+    return res.data;
+  }
+);
+export const updatePost = createAsyncThunk(
+  'posts/updatePost',
+  async (postData: InitialPostDataT) => {
+    try {
+      const res = await axios.put(`${POSTS_URL}/${postData.id}`, postData);
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return postData;
+    }
+  }
+);
+export const deletePost = createAsyncThunk('posts/deletePost', async (postId: string) => {
+  const res = await axios.delete(`${POSTS_URL}/${postId}`);
+  return { data: res.data, postId };
 });
 
 //
@@ -126,6 +146,7 @@ const postsSlice = createSlice({
       state.status = 'succeeded';
       state.posts.push({
         ...action.payload,
+        id: action.payload.id.toString(),
         date: new Date().toISOString(),
         reactions: {
           thumbsUp: 0,
@@ -135,6 +156,32 @@ const postsSlice = createSlice({
           coffee: 0,
         },
       });
+    });
+    //Update Post
+    builder.addCase(updatePost.fulfilled, (state, action) => {
+      if (!action.payload?.id) {
+        console.log('Update could not complete');
+        console.log(action.payload);
+        return;
+      }
+      state.status = 'succeeded';
+      const updatedPost = {
+        ...action.payload,
+        date: new Date().toISOString(),
+        reactions: {
+          thumbsUp: 0,
+          wow: 0,
+          heart: 0,
+          rocket: 0,
+          coffee: 0,
+        },
+      };
+      const newPosts = state.posts.filter((post) => post.id !== action.payload.id.toString());
+      state.posts = [...newPosts, updatedPost];
+    });
+    //Delete Post
+    builder.addCase(deletePost.fulfilled, (state, action: PayloadAction<{ postId: string }>) => {
+      state.posts = state.posts.filter((post) => post.id !== action.payload.postId);
     });
   },
 });
@@ -159,13 +206,6 @@ interface PostsStateT {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: null | SerializedError;
 }
-export interface PostsReactionsT {
-  thumbsUp: number;
-  wow: number;
-  heart: number;
-  rocket: number;
-  coffee: number;
-}
 export interface PostT {
   id: string;
   userId: string;
@@ -173,4 +213,17 @@ export interface PostT {
   title: string;
   body: string;
   reactions: PostsReactionsT;
+}
+export interface InitialPostDataT {
+  id: string;
+  userId: string;
+  title: string;
+  body: string;
+}
+export interface PostsReactionsT {
+  thumbsUp: number;
+  wow: number;
+  heart: number;
+  rocket: number;
+  coffee: number;
 }
