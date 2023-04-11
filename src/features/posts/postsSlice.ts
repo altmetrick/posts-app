@@ -49,10 +49,10 @@ const initialState = {
 //Thunks
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const res = await axios.get(POSTS_URL, {
-    params: {
-      _page: 1,
-      _limit: 10,
-    },
+    // params: {
+    //   _page: 1,
+    //   _limit: 10,
+    // },
   });
   return res.data;
 });

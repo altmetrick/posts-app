@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Layout from './components/Layout';
 import { PostsList, AddPostForm, SinglePost, EditPostForm } from './features/posts';
+import { SingleUser, UsersList } from './features/users';
 
 function App() {
   return (
@@ -15,6 +16,11 @@ function App() {
             <Route index element={<AddPostForm />} />
             <Route path={':postId'} element={<SinglePost />} />
             <Route path={'edit/:postId'} element={<EditPostForm />} />
+          </Route>
+
+          <Route path={'users'}>
+            <Route index element={<UsersList />} />
+            <Route path={':userId'} element={<SingleUser />} />
           </Route>
         </Route>
       </Routes>

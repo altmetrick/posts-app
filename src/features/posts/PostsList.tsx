@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetchPosts, selectPostsError, selectPostsStatus, selectAllPosts } from './postsSlice';
 import PostExcerpt from './PostExcerpt';
+import { useSearchParams } from 'react-router-dom';
 
 const PostsList = () => {
   const status = useAppSelector(selectPostsStatus);

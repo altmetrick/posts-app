@@ -4,8 +4,9 @@ const Header = () => {
   const { pathname } = useLocation();
 
   const options = [
-    { path: '/', label: 'Home' },
+    { path: '/', label: 'Posts' },
     { path: '/post', label: 'Create Post' },
+    { path: '/users', label: 'Users' },
   ];
 
   const renderedLinks = options.map((option) => (
