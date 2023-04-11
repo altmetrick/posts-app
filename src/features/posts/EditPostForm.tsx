@@ -11,6 +11,12 @@ const EditPostForm = () => {
   const navigate = useNavigate();
 
   const post = useAppSelector(selectPostById(postId as string));
+  const users = useAppSelector(selectAllUsers);
+
+  const [title, setTitle] = useState(post?.title);
+  const [body, setBody] = useState(post?.body);
+  const [userId, setUserId] = useState(post?.userId);
+  const [reqStatus, setReqStatus] = useState('idle');
 
   if (!post) {
     return (
@@ -20,19 +26,11 @@ const EditPostForm = () => {
     );
   }
 
-  const users = useAppSelector(selectAllUsers);
-  const author = useAppSelector(selectUserById(post.userId));
-
-  const [title, setTitle] = useState(post?.title);
-  const [body, setBody] = useState(post?.body);
-  const [userId, setUserId] = useState(post?.userId);
-  const [reqStatus, setReqStatus] = useState('idle');
-
   const onTitleChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
   const onBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => setBody(e.target.value);
   const onAuthorChange = (e: ChangeEvent<HTMLSelectElement>) => setUserId(e.target.value);
 
-  const canSave = title && body && userId;
+  const canSave = title && body && userId && post;
 
   const handleSavePost = () => {
     if (canSave) {
@@ -40,7 +38,7 @@ const EditPostForm = () => {
         setReqStatus('pending');
         const postData = {
           id: post.id,
-          userId: post.userId,
+          userId: userId,
           title,
           body,
         };
@@ -51,7 +49,7 @@ const EditPostForm = () => {
         setBody('');
         setUserId('');
 
-        navigate('/');
+        navigate(`/post/${post.id}`);
       } catch (error) {
         console.log(error);
       } finally {
@@ -73,7 +71,11 @@ const EditPostForm = () => {
     }
   };
 
+  //find initial author of the post to show it as the first option in <select>
+  const author = users.find((user) => user.id === Number(userId));
+
   const authorIdsOptions = users.map((user) => {
+    if (user.id === Number(userId)) return;
     return (
       <option key={user.id} value={user.id}>
         {user.name}
@@ -93,7 +95,7 @@ const EditPostForm = () => {
         <div className="flex-column">
           <label htmlFor="postAuthor">Author</label>
           <select id="postAuthor" value={userId} onChange={onAuthorChange}>
-            <option value={author?.id}>{author?.name}</option>
+            <option value={author?.id || ''}>{author?.name || 'unknown'}</option>
             {authorIdsOptions}
           </select>
         </div>

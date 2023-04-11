@@ -4,17 +4,9 @@ import { fetchPosts, selectPostsError, selectPostsStatus, selectAllPosts } from 
 import PostExcerpt from './PostExcerpt';
 
 const PostsList = () => {
-  const dispatch = useAppDispatch();
-
   const status = useAppSelector(selectPostsStatus);
   const posts = useAppSelector(selectAllPosts);
   const error = useAppSelector(selectPostsError);
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchPosts());
-    }
-  }, [status, dispatch]);
 
   let content;
 

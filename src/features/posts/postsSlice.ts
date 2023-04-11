@@ -72,6 +72,9 @@ export const updatePost = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log(error);
+      //In jsonplaceholder API you can't update posts that you created it will return error 500
+      //
+      //return error
       return postData;
     }
   }
@@ -167,6 +170,8 @@ const postsSlice = createSlice({
       state.status = 'succeeded';
       const updatedPost = {
         ...action.payload,
+        id: action.payload.id.toString(),
+        userId: action.payload.userId.toString(),
         date: new Date().toISOString(),
         reactions: {
           thumbsUp: 0,
